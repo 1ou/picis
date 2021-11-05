@@ -1,8 +1,8 @@
 use rustfft::num_traits::Float;
-use audio::detector::autocorrelation::AutocorrelationDetector;
-use audio::detector::mcleod::McLeodDetector;
-use audio::detector::PitchDetector;
-use audio::utils::buffer::new_real_buffer;
+use pitchdetector::detector::autocorrelation::AutocorrelationDetector;
+use pitchdetector::detector::mcleod::McLeodDetector;
+use pitchdetector::detector::PitchDetector;
+use pitchdetector::utils::buffer::new_real_buffer;
 
 pub(crate) fn detect_pitch_ii16(mut data: Vec<i16>) {
     let signal: Vec<f32> = data.iter()

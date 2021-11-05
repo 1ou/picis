@@ -46,3 +46,8 @@ pub use detector::internals::Pitch;
 pub mod detector;
 pub mod float;
 pub mod utils;
+
+#[no_mangle]
+pub extern fn double_input(input: i32) -> i32 {
+    input * 2
+}
