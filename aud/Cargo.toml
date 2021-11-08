@@ -13,6 +13,9 @@ clap = "2.33.3"
 cpal = "0.13.4"
 hound = "3.4.0"
 plotters = "^0.3.1"
+jni = "0.19.0"
+ejni = "0.0.1"
+libc = "0.2.7"
 
 [dev-dependencies]
 criterion = "0.3"
@@ -26,5 +29,6 @@ name = "utils_benchmark"
 harness = false
 
 [lib]
-name = "pitchdetector"
-crate-type = ["rlib", "dylib"]
+name = "pitchdetectorrr"
+#crate-type = ["dylib","rlib"]
+crate-type = ["staticlib"]

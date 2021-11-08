@@ -85,6 +85,7 @@ where
 ///
 /// ```rust
 /// use audio::utils::buffer::BufferPool;
+/// use pitchdetector::utils::buffer::BufferPool;
 ///
 /// let buffers = BufferPool::new(3);
 /// let mut buf1 = buffers.get_real_buffer();

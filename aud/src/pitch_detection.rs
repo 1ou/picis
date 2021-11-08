@@ -1,17 +1,19 @@
+use std::ops::Add;
 use rustfft::num_traits::Float;
-use pitchdetector::detector::autocorrelation::AutocorrelationDetector;
-use pitchdetector::detector::mcleod::McLeodDetector;
-use pitchdetector::detector::PitchDetector;
-use pitchdetector::utils::buffer::new_real_buffer;
+use crate::detector::autocorrelation::AutocorrelationDetector;
+use crate::detector::mcleod::McLeodDetector;
+use crate::detector::PitchDetector;
+use crate::utils::buffer::new_real_buffer;
 
-pub(crate) fn detect_pitch_ii16(mut data: Vec<i16>) {
+
+pub fn detect_pitch_ii16(mut data: Vec<i16>) -> String {
     let signal: Vec<f32> = data.iter()
         .map(|x| f32::from(*x))
         .collect();
-    detect_pitch(signal);
+    return detect_pitch(signal);
 }
 
-pub(crate) fn detect_pitch(mut data: Vec<f32>) {
+pub fn detect_pitch(mut data: Vec<f32>) -> String {
     let signal: Vec<f64> = data.iter()
         .map(|x| f64::from(*x))
         .collect();
@@ -30,6 +32,7 @@ pub(crate) fn detect_pitch(mut data: Vec<f32>) {
 
     let mut detector = detector_factory("Autocorrelation".to_string(), WINDOW, PADDING);
 
+    let mut pitch_str: String = String::from("Not found");
     for i in 0..n_windows {
         let t: usize = i * DELTA_T;
         get_chunk(&signal, t, WINDOW, &mut chunk);
@@ -46,6 +49,10 @@ pub(crate) fn detect_pitch(mut data: Vec<f32>) {
                     "Chosen Peak idx: {}; clarity: {}; freq: {} +/- {}",
                     idx, clarity, frequency, epsilon
                 );
+
+                pitch_str.push_str(";");
+                pitch_str.push_str(pitch.frequency.to_string().as_str());
+
                 // assert!((frequency - freq_in).abs() < ERROR_TOLERANCE * epsilon);
             }
             None => {
@@ -53,9 +60,10 @@ pub(crate) fn detect_pitch(mut data: Vec<f32>) {
             }
         }
     }
+    return pitch_str;
 }
 
-pub(crate) fn detector_factory(name: String, window: usize, padding: usize) -> Box<dyn PitchDetector<f64>> {
+pub fn detector_factory(name: String, window: usize, padding: usize) -> Box<dyn PitchDetector<f64>> {
     match name.as_ref() {
         "McLeod" => {
             return Box::new(McLeodDetector::<f64>::new(window, padding));
@@ -69,7 +77,7 @@ pub(crate) fn detector_factory(name: String, window: usize, padding: usize) -> B
     }
 }
 
-pub(crate) fn get_chunk<T: Float>(signal: &[T], start: usize, window: usize, output: &mut [T]) {
+pub fn get_chunk<T: Float>(signal: &[T], start: usize, window: usize, output: &mut [T]) {
     let start = match signal.len() > start {
         true => start,
         false => signal.len(),
