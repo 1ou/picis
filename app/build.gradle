@@ -95,6 +95,7 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile 'com.github.jnr:jnr-ffi:2.0.2'
 
         compileOnly 'org.projectlombok:lombok:1.18.22'
