@@ -1,12 +1,11 @@
 package com.picis.piano.desktop;
 
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.picis.piano.Piano;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		new Lwjgl3Application(new Piano(), config);
+		LwjglApplication config = new LwjglApplication(new Piano());
+		new LwjglApplication(new Piano());
 	}
 }
